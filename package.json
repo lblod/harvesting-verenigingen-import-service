@@ -1,0 +1,28 @@
+{
+  "name": "harvesting-import-service",
+  "version": "0.10.0",
+  "description": "Microservice that harvests knowledge about a harvesting-task from the linked annotated documents",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lblod/harvesting-import-service.git"
+  },
+  "author": "redpencil.io",
+  "license": "MIT",
+  "dependencies": {
+    "@lblod/mu-auth-sudo": "^0.6.1",
+    "jsonld": "^8.3.1",
+    "lodash.flatten": "^4.4.0",
+    "lodash.uniq": "^4.5.0",
+    "lodash.uniqwith": "^4.5.0",
+    "n3": "^1.17.0",
+    "rdf-serialize": "^2.2.2",
+    "rdfa-streaming-parser": "^2.0.1",
+    "stream-to-array": "^2.3.0",
+    "stream-to-string": "^1.2.0",
+    "streamify-array": "^1.0.1",
+    "streamify-string": "^1.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
