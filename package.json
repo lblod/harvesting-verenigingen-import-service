@@ -1,7 +1,7 @@
 {
-  "name": "harvesting-import-service",
-  "version": "0.10.0",
-  "description": "Microservice that harvests knowledge about a harvesting-task from the linked annotated documents",
+  "name": "harvesting-verenigingen-import-service",
+  "version": "0.10.1",
+  "description": "Microservice that imports harvested data from verenigingen",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lblod/harvesting-import-service.git"
