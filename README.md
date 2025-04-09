@@ -46,8 +46,43 @@ This service will filter out  <http://redpencil.data.gift/vocabularies/tasks/Tas
 
 ### Environment variables
 
- - TARGET_GRAPH: refers to the graph where the harvested triples will be imported into.
- Defaults to <http://mu.semte.ch/graphs/public>.
+#### `SLEEP_BETWEEN_IMPORT_BATCHES`
+
+- **Description**: Specifies the delay in milliseconds between import batches. This delay helps manage the load on the system by spacing out the import operations.
+- **Type**: Positive Integer
+- **Example**: `100` (in milliseconds)
+- **Default**: `1` millisecond
+
+#### `SIZE_IMPORT_BATCHES`
+
+- **Description**: Defines the size of each import batch. This determines how many items are processed in a single batch during the import operation.
+- **Type**: Positive Integer
+- **Example**: `1000`
+- **Default**: `1000`
+
+#### `ENDPOINT_IMPORT_BATCHES`
+
+- **Description**: The URL endpoint for importing batches. This endpoint should point to the service that handles the batch import operations.
+- **Type**: URL String
+- **Example**: `http://virtuoso:8890/sparql`
+- **Default**: `http://virtuoso:8890/sparql`
+
+#### `IMPORT_TARGET_GRAPH`
+
+- **Description**: The target graph URL where the imported data will be stored. This URL identifies the specific graph within the RDF store.
+- **Type**: URL String
+- **Example**: `http://mu.semte.ch/graphs/harvesting`
+- **Default**: `http://mu.semte.ch/graphs/harvesting`
+
+#### `ENDPOINT_REPLACE_SOURCE_GRAPH_OPERATION`
+
+- **Description**: The URL endpoint for the operation that replaces the source graph. This endpoint is used to update the source graph with new data.
+- **Type**: URL String
+- **Example**: `http://virtuoso:8890/sparql`
+- **Default**: `http://virtuoso:8890/sparql`
+
+---
+
 
 ## Validation and correction
 The service will lis
