@@ -1,6 +1,6 @@
 # harvesting-import-service
 
-Microservice that harvests knowledge about a harvesting-task from the linked annotated documents
+Microservice that harvests knowledge about a harvesting-task from verenigingen-scraper
 and writes the resulting triples to the database.
 
 ## Installation
@@ -10,7 +10,7 @@ To add the service to your stack, add the following snippet to docker-compose.ym
 ```
 services:
   harvesting-import:
-    image: lblod/harvesting-import-service:x.x.x
+    image: lblod/harvesting-verenigingen-import-service:x.x.x
     volumes:
       - ./data/files:/share
 ```
@@ -20,29 +20,30 @@ services:
 ### Delta
 
 ```
-  {
-    match: {
-      predicate: {
-        type: 'uri',
-        value: 'http://www.w3.org/ns/adms#status'
-      },
-      object: {
-        type: 'uri',
-        value: 'http://redpencil.data.gift/id/concept/JobStatus/scheduled'
-      }
+{
+  match: {
+    predicate: {
+      type: 'uri',
+      value: 'http://www.w3.org/ns/adms#status'
     },
-    callback: {
-      method: 'POST',
-      url: 'http://harvesting-import/delta'
-    },
-    options: {
-      resourceFormat: 'v0.0.1',
-      gracePeriod: 1000,
-      ignoreFromSelf: true
+    object: {
+      type: 'uri',
+      value: 'http://redpencil.data.gift/id/concept/JobStatus/scheduled'
     }
   },
+  callback: {
+    method: 'POST',
+    url: 'http://harvesting-import/delta'
+  },
+  options: {
+    resourceFormat: 'v0.0.1',
+    gracePeriod: 1000,
+    ignoreFromSelf: true
+  }
+}
 ```
-This service will filter out  <http://redpencil.data.gift/vocabularies/tasks/Task> with operation <http://lblod.data.gift/id/jobs/concept/TaskOperation/importing>.
+
+This service will filter out <http://redpencil.data.gift/vocabularies/tasks/Task> with operation <http://lblod.data.gift/id/jobs/concept/TaskOperation/importing>.
 
 ### Environment variables
 
@@ -83,24 +84,21 @@ This service will filter out  <http://redpencil.data.gift/vocabularies/tasks/Tas
 
 ---
 
-
 ## Validation and correction
-The service will lis
-The service will validate the triples to import and will try its best to correct the ones that it founds invalid.
-Valid, invalid and corrected triples are written to a file.
+
+The service will validate the triples to import. (What defines a valid triple is context-sensitive here; it means valid and compatible with our system.)
+Valid, invalid, and corrected triples are written to a file.
 
 ## REST API
 
 ### POST /delta
 
-Starts the import of the given harvesting-tasks into the db
+Starts the import of the given harvesting-tasks into the database.
 
 - Returns `204 NO-CONTENT` if no harvesting-tasks could be extracted.
-
-- Returns `200 SUCCESS` if the harvesting-tasks where successfully processes.
-
+- Returns `200 SUCCESS` if the harvesting-tasks were successfully processed.
 - Returns `500 INTERNAL SERVER ERROR` if something unexpected went wrong while processing the harvesting-tasks.
 
-
 ## Model
+
 See [lblod/job-controller-service](https://github.com/lblod/job-controller-service)
