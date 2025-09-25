@@ -12,6 +12,12 @@ export const SIZE_IMPORT_BATCHES = envvar
   .default(1000)
   .asIntPositive();
 
+export const SIZE_IMPORT_BATCHES_INCREMENTAL = envvar
+  .get('SIZE_IMPORT_BATCHES_INCREMENTAL')
+  .example('3')
+  .default(3)
+  .asIntPositive();
+
 export const ENDPOINT_IMPORT_BATCHES = envvar
   .get('ENDPOINT_IMPORT_BATCHES')
   .example('http://virtuoso:8890/sparql')
