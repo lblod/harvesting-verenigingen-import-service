@@ -53,7 +53,7 @@ app.post('/delta', async function (req, res, next) {
       else {
         const importingTask = await loadExtractionTask(entry, TASK_HARVESTING_IMPORTING);
         if(importingTask) {
-          runFullImport(incrementalImportingTask);
+          runFullImport(importingTask);
         }
       }
     }
