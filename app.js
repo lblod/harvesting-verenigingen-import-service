@@ -21,11 +21,17 @@ import {
   run as runIncrementatlImport
 } from './lib/pipeline-incremental-import';
 
+import { waitForDatabase } from './lib/database-utils';
+
 /*
  * fail existing import tasks when (re)starting
  * this should clean up any task in a busy state after an unexpected service restart
  */
-failBusyImportTasks();
+
+async function init() {
+  await waitForDatabase();
+  await failBusyImportTasks();
+}
 
 app.use(bodyParser.json({
   type: function (req) {
@@ -65,4 +71,4 @@ app.post('/delta', async function (req, res, next) {
   }
 });
 
-app.use(errorHandler);
+init().then(() => app.use(errorHandler));
