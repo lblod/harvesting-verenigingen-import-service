@@ -1,13 +1,25 @@
 import {app, errorHandler} from 'mu';
 
 import bodyParser from 'body-parser';
-import { run as runImportPipeline } from './lib/pipeline-import';
+
 import { Delta } from "./lib/delta";
 import {
+  loadExtractionTask,
   failBusyImportTasks,
 } from "./lib/task";
-import { STATUS_SCHEDULED } from './constants';
+import {
+  STATUS_SCHEDULED,
+  TASK_HARVESTING_IMPORTING,
+  TASK_HARVESTING_INCREMENTAL_IMPORTING
+} from './constants';
 
+import {
+  run as runFullImport
+} from './lib/pipeline-import';
+
+import {
+  run as runIncrementatlImport
+} from './lib/pipeline-incremental-import';
 
 /*
  * fail existing import tasks when (re)starting
@@ -34,7 +46,16 @@ app.post('/delta', async function (req, res, next) {
     }
     for (let entry of entries) {
       // NOTE: we don't wait as we do not want to keep hold off the connection.
-      runImportPipeline(entry);
+      const incrementalImportingTask = await loadExtractionTask(entry, TASK_HARVESTING_INCREMENTAL_IMPORTING);
+      if (incrementalImportingTask) {
+        runIncrementatlImport(incrementalImportingTask);
+      }
+      else {
+        const importingTask = await loadExtractionTask(entry, TASK_HARVESTING_IMPORTING);
+        if(importingTask) {
+          runFullImport(importingTask);
+        }
+      }
     }
     return res.status(200).send().end();
   } catch (e) {
