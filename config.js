@@ -35,3 +35,9 @@ export const ENDPOINT_REPLACE_SOURCE_GRAPH_OPERATION = envvar
   .example('http://virtuoso:8890/sparql')
   .default('http://virtuoso:8890/sparql')
   .asUrlString();
+
+export const FEATURE_ENABLE_MOVE_AUTOCOMMIT = envvar
+  .get('FEATURE_ENABLE_MOVE_AUTOCOMMIT')
+  .example('true')
+  .default('false')
+  .asBool();
