@@ -82,6 +82,13 @@ This service will filter out <http://redpencil.data.gift/vocabularies/tasks/Task
 - **Example**: `http://virtuoso:8890/sparql`
 - **Default**: `http://virtuoso:8890/sparql`
 
+#### `FEATURE_ENABLE_MOVE_AUTOCOMMIT`
+
+- **Description**: Enables Virtuoso's autocommit mode with row-level logging (`sql:log-enable 3`) for the MOVE graph operation. This avoids transaction log size limits by performing row-level commits instead of a single atomic transaction. **Use with caution**: this makes the operation non-atomic, so ensure no parallel healing or import processes are running.
+- **Type**: Boolean
+- **Example**: `true`
+- **Default**: `false`
+
 ---
 
 ## Validation and correction
